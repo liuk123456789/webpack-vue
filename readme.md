@@ -222,4 +222,18 @@ webpack-cli: 3.3.12
 
 ## 处理css ##
 
-   说明：webpack不能直接处理css
+   说明：webpack不能直接处理css,需要借助loader.如果是.css,需要style-loader,css-loader因为css3的一些样式存在兼容性，所以还需要加上postcss-loader,和autoprefixer（自动添加前缀） ，如果是less或者sass的话，需压迫less.loader和sass.loader。这次我们以less和css为例
+
+		npm install style-loader less-loader css-loader postcss-loader autoprefixer less -D
+
+   说明：
+
+   1. style-loader动态创建style标签，将css插入到head中
+   2. css-loader负责处理@import等语句
+   3. postcss-loader和autoprefixer,自动生成兼容浏览器前缀
+   4. less-loader负责处理编译.less文件，将其转换为css
+
+   注意：
+
+	loader的执行顺序是从右向左执行，也就是后面的loader先执行，
+	loader存在一个参数enforce,值可以为pre(优先执行),post(滞后执行)。
