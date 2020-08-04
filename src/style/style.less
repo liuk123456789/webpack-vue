@@ -1,0 +1,62 @@
+//src/index.less
+@color: hsl(0deg 0% 100%);
+@border: hsl(210deg 100% 63%);
+@background: hsl(210deg 100% 63%);
+@borderActive: hsl(211deg 77% 56%);
+@borderHover: hsl(211deg 100% 70%);
+@borderFocus: hsl(211deg 100% 70%);
+@baseColor: #333;
+@titleColor: #666;
+@top: 16px;
+
+.button_default {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: @background;
+    border: 1px solid @border;
+    color: @color;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.botton_default:active {
+    border-color: @borderActive;
+    background-color: @borderActive;
+}
+.button_default:hover {
+    border-color: @borderHover;
+    background-color: @borderHover;
+}
+.button_default:focus {
+    border-color: @borderFocus;
+    background-color: @borderFocus;
+}
+.base {
+    color: @baseColor;
+}
+
+.title {
+    color: @titleColor;
+    margin-top: @top;
+}
+.marign_top_one {
+    margin-top: @top;
+}
+
+.test_url {
+    width: 100%;
+    height: 500px;
+    background: url('../assets/images/step_four.png') no-repeat;
+}
