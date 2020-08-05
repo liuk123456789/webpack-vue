@@ -15,8 +15,14 @@ module.exports = {
         chunkFilename: 'router/[name].[hash:6].js',
         publicPath: '/'
     },
+    externals: {
+        'vue': 'Vue',
+        'vue-router': 'VueRouter',
+        'element-ui': 'ElementUI',
+        'lodash': '_'
+    },
     resolve: {
-        modules: ['node_modules'],
+        // modules: [path.resolve(__dirname, '../node_modules')],
         alias: {
             '@': path.resolve(__dirname, '..', 'src')
         },
@@ -26,7 +32,7 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: ['cache-loader','vue-loader'],
+                loader: ['vue-loader'],
                 include: [path.resolve(__dirname, '../src')]
             },
             {

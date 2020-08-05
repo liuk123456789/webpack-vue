@@ -567,4 +567,39 @@ ignore 忽略一些文件
 
 -------------------- 以上的优化提交在webpack_1.1分支--------------------
 
- 3. 
+ 3. externals + cdn 优化打包文件体积
+
+	1. externals 设置vue和vue-router不参与打包
+
+			// webpack.config.prod.js
+
+			externals: {
+				'vue': 'Vue',
+				'vue-router': 'VueRouter',
+        		'element-ui': 'ElementUI'
+				'lodash': '_'
+			}
+
+ 4. noParse
+ 
+	如果一些第三方模块没有AMD/CommonJS规范版本，可以使用 noParse 来标识这个模块，这样 Webpack 会引入这些模块，但是不进行转化和解析，从而提升 Webpack 的构建性能 ，例如：jquery 、lodash
+
+	// 举例， webpack.config.base.js
+	noParse: /lodash/
+
+ 5. IgnorePlugin --webpack内置插件，作用是忽略第三方包指定目录
+
+	// 语法格式
+	new webpack.IgnorePlugin(requestRegExp, contextRegExp);
+	
+	参数： 
+		requestRegExp 匹配资源请求路径的正则表达式
+		contextRegExp （可选）匹配test资源的上下文的正则表达式
+
+ 6. DllPlugin
+
+	
+
+ 7. 抽离公共代码splitChunk
+
+ 8. 
