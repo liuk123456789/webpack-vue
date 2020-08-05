@@ -282,7 +282,7 @@ webpack-cli: 3.3.12
 	module.exports = {
     	//...
     	plugins: [
-        	//不需要传参数喔，它可以找到 outputPath
+        	//不需要传参数，它可以找到 outputPath
         	new CleanWebpackPlugin() 
     	]
 	}
