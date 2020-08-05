@@ -1,9 +1,8 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development'
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
@@ -11,17 +10,15 @@ module.exports = {
         app: './src/main.js',
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname,'..','dist'),
         filename: '[name].[hash:6].js',
         chunkFilename: 'router/[name].[hash:6].js',
         publicPath: '/'
     },
-    mode: 'development',
-    devtool: 'source-map',
     resolve: {
         modules: ['node_modules'],
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@': path.resolve(__dirname, '..', 'src')
         },
         extensions: ['.js', '.vue', '.json']
     },
@@ -29,20 +26,14 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader',
-                // options: {
-                //     loaders: {
-                //         css: MiniCssExtractPlugin.extract({
-                //             use: 'css-loader',
-                //             fallback: 'vue-style-loader'
-                //         })
-                //     }
-                // }
+                loader: ['cache-loader','vue-loader'],
+                include: [path.resolve(__dirname, '../src')]
             },
             {
                 test: /\.js?$/,
                 use: ['babel-loader'],
-                exclude: /node_modules/
+                // exclude: /node_modules/
+                include: [path.resolve(__dirname, '../src')]
             },
             {
                 test: /\.(c|le)ss$/,
@@ -65,7 +56,8 @@ module.exports = {
                             }
                         }
                     }, 'less-loader'],
-                    exclude: /node_modules/
+                    include: [path.resolve(__dirname, '../src')]
+                    // exclude: /node_modules/
             },
             {
                 test: /\.(png|jpg|gif|jpeg|webp|eot|ttf|woff)$/,
@@ -99,35 +91,13 @@ module.exports = {
                         }
                     }
                 ],
-                exclude: /node_modules/
-            },
-            // {
-            //     test: /\.vue$/,
-            //     use: 'html-withimg-loader'
-            // }
+                include: [path.resolve(__dirname, '../src')]
+            }
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './public/index.html',
-            filename: 'index.html', //打包后的文件名
-            inject: true
-        }),
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
-        }),
-        new CopyWebpackPlugin({
-            patterns:
-                [
-                    {
-                        from: path.resolve(__dirname, 'public', 'js'),
-                        to: path.resolve(__dirname, 'dist', 'js'),
-                        flatten: true,
-                        globOptions: {
-                            ignore: ['**/test.js']
-                        }
-                    }
-                ],
         }),
         new VueLoaderPlugin()
     ]

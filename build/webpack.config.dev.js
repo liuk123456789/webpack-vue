@@ -1,8 +1,13 @@
 const {merge} = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.config.base');
 
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+
 module.exports = merge(baseWebpackConfig, {
     mode: 'development',
+    devtool: '#cheap-module-eval-source-map',
     devServer: {
         port: 3000, // 端口号
         hot: true,
@@ -15,5 +20,13 @@ module.exports = merge(baseWebpackConfig, {
         compress: true, //是否启用 gzip 压缩
     },
     plugins: [
+
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            template: './public/index.html',
+            filename: 'index.html', //打包后的文件名
+            inject: true
+        }),
+        new FriendlyErrorsPlugin()
     ]
 })
