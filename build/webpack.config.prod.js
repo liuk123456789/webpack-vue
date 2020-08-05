@@ -27,7 +27,9 @@ module.exports = smp.wrap(merge(baseWebpackConfig, {
     //     ]
     // },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: ['**/*','**/*','**/*', '!dll', '!dll/**'] //不删除dll目录
+        }),
         new OptimizeCssPlugin(),
         new CopyWebpackPlugin({
             patterns:
@@ -54,6 +56,9 @@ module.exports = smp.wrap(merge(baseWebpackConfig, {
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'auto',// 允许控制在将块包含到HTML中之前应如何对其进行排序
+        }),
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, '../dist/dll/mainfest.json')
         }),
     ]
 }));

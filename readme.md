@@ -567,4 +567,96 @@ ignore 忽略一些文件
 
 -------------------- 以上的优化提交在webpack_1.1分支--------------------
 
- 3. 
+ 3. externals + cdn 优化打包文件体积
+
+	1. externals 设置vue和vue-router不参与打包
+
+			// webpack.config.prod.js
+
+			externals: {
+				'vue': 'Vue',
+				'vue-router': 'VueRouter',
+        		'element-ui': 'ElementUI'
+				'lodash': '_'
+			}
+--------------代码提交至webpack_1.2分支，是在webpack_1.1分支下创建的分支--------
+ 4. noParse
+ 
+	如果一些第三方模块没有AMD/CommonJS规范版本，可以使用 noParse 来标识这个模块，这样 Webpack 会引入这些模块，但是不进行转化和解析，从而提升 Webpack 的构建性能 ，例如：jquery 、lodash
+
+	// 举例， webpack.config.base.js
+	noParse: /lodash/
+
+ 5. IgnorePlugin --webpack内置插件，作用是忽略第三方包指定目录
+
+	// 语法格式
+	new webpack.IgnorePlugin(requestRegExp, contextRegExp);
+	
+	参数： 
+		requestRegExp 匹配资源请求路径的正则表达式
+		contextRegExp （可选）匹配test资源的上下文的正则表达式
+
+----------------------------这部分不做演示---------------------------------
+
+ 6. DllPlugin
+	
+	简述一下DllPlugin 的步骤
+
+	1. build文件夹新建webpack.config.dll.js文件
+
+            // 具体如下
+             const webpack = require('webpack');
+             const path = require('path');
+
+             // 需要打包进来的文件
+             const vendors = [
+                 'vue',
+                 'vue-router',
+                 'element-ui'
+             ];
+             module.exports = {
+                 entry: {
+                    vendor: vendors
+                 },
+                 mode: 'production',
+                 output: {
+                     filename: '[name].dll.[hash:6].js', // 输出的名字
+                     path: path.resolve(__dirname, '../dist/dll'), // 路径
+                     library: '[name]_dll', // 暴露给外部使用
+                     // librayTarget 指定如何暴露内容，缺省时就是 var
+                 },
+                 plugins: [
+                     new webpack.DllPlugin({
+                         // name必须和library一致
+                         name: '[name]_dll',
+                         path: path.resolve(__dirname, '../dist/dll/mainfest.json') //manifest.json的生成路径
+                     })
+                 ]
+             };
+
+	2. package.json配置脚本
+
+            "scripts": {
+                "dev": "cross-env NODE_ENV=development webpack-dev-server --config=build/webpack.config.dev.js",
+                "build": "cross-env NODE_ENV=production node build/build.js",
+                "build:dll": "webpack --config build/webpack.config.dll.js", // 重点关注这个就行
+            },
+	3. webpack.config.prod.js文件配置DLLReferencePlugin让mainfest.json映射到相关依赖上
+
+			plugins: [
+				new webpack.DllReferencePlugin({
+            		manifest: path.resolve(__dirname, '../dist/dll/mainfest.json')
+        		})
+			]
+
+ 7. 抽离公共代码splitChunk
+
+ 8. webpack自身的优化
+
+	1. tree-shaking
+
+		使用ES6的import语法，那么生产环境下移除没有使用的代码
+
+	2. scope hosting作用域提升
+
+		变量提升，可以减少一些变量声明。在生产环境下，默认开启。生产环境默认开启

@@ -13,7 +13,7 @@ var webpackConfig = require('./webpack.config.prod')
 var spinner = ora('building for production...')
 spinner.start()
 
-rm(path.resolve(__dirname, '../dist/*'), err => {
+rm(path.resolve(__dirname, '../dist/', '!dll/**'), err => {
     if (err) throw err
     webpack(webpackConfig, function (err, stats) {
         spinner.stop()

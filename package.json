@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config=build/webpack.config.dev.js",
-    "build": "cross-env NODE_ENV=production node build/build.js"
+    "build": "cross-env NODE_ENV=production node build/build.js",
+    "build:dll": "webpack --config build/webpack.config.dll.js"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.0",
     "@babel/runtime-corejs3": "^7.11.0",
+    "element-ui": "^2.13.2",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4"
   }
