@@ -6,9 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-console.log(path.resolve(__dirname, 'src'));
-
-
 module.exports = {
     entry: {
         app: './src/main.js',
@@ -16,6 +13,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[hash:6].js',
+        chunkFilename: 'router/[name].[hash:6].js',
         publicPath: '/'
     },
     mode: 'development',
