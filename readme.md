@@ -579,7 +579,7 @@ ignore 忽略一些文件
         		'element-ui': 'ElementUI'
 				'lodash': '_'
 			}
-
+--------------代码提交至webpack_1.2分支，是在webpack_1.1分支下创建的分支--------
  4. noParse
  
 	如果一些第三方模块没有AMD/CommonJS规范版本，可以使用 noParse 来标识这个模块，这样 Webpack 会引入这些模块，但是不进行转化和解析，从而提升 Webpack 的构建性能 ，例如：jquery 、lodash
@@ -596,10 +596,21 @@ ignore 忽略一些文件
 		requestRegExp 匹配资源请求路径的正则表达式
 		contextRegExp （可选）匹配test资源的上下文的正则表达式
 
- 6. DllPlugin
+----------------------------这部分不做演示---------------------------------
 
+ 6. DllPlugin
+	
+	
 	
 
  7. 抽离公共代码splitChunk
 
- 8. 
+ 8. webpack自身的优化
+
+	1. tree-shaking
+
+		使用ES6的import语法，那么生产环境下移除没有使用的代码
+
+	2. scope hosting作用域提升
+
+		变量提升，可以减少一些变量声明。在生产环境下，默认开启。生产环境默认开启
