@@ -38,14 +38,14 @@ module.exports = {
             {
                 test: /\.(c|le)ss$/,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: isDev,
-                            reloadAll: true,
-                        }
-                    },
-                    // MiniCssExtractPlugin.loader,
+                    // {
+                    //     loader: MiniCssExtractPlugin.loader,
+                    //     options: {
+                    //         hmr: isDev,
+                    //         reloadAll: true,
+                    //     }
+                    // },
+                    // 'style-loader',
                     'css-loader', {
                         loader: 'postcss-loader',
                         options: {
