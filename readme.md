@@ -5,6 +5,15 @@
 webpack: 4.44.1
 webpack-cli: 3.3.12
 
+## webpack 重要的几个概念 ##
+
+module --> chunk --> bundle
+
+module: 模块，webpack的最小单位，包含了代码脚本js、通过import/require引入的文件，js,css,img等。
+
+chunk: 模块组合变成了块，包括入口文件、import/require引入的module、拆分的代码块
+bundle: webpack将chunk打包输出的便是bundle,所以bundle和chunk存在一一对应的关系
+
 ## 主要分为3个部分 ##
 
  1. webpack的基本配置
@@ -42,7 +51,7 @@ webpack-cli: 3.3.12
 	3. @babel/plugin-transform-runtime 通常搭配@babel/runtime 是一个可以重复使用 Babel 注入的帮助程序，以节省代码大小的插件。
 	4. @babel/runtime-corejs3 主要作用时加载polyfill
 
-	> https://juejin.im/post/6844904008679686152
+	[ https://juejin.im/post/6844904008679686152]( https://juejin.im/post/6844904008679686152)
 
  4. 新建webpack.config.js --具体看文件，注意此时打包还是不会进行语法转换的，因为没有配置.babelrc
 
@@ -249,7 +258,7 @@ webpack-cli: 3.3.12
 
  1. 找到一张小于10k的图片，控制查看下这个元素的url对应的是否是base64格式的
 
- 2. esModule 设置为 false，否则，<img src={require('XXX.jpg')} /> 会出现 <img src=[Module Object] />
+ 2. esModule 设置为 false，否则，`<img src={require('XXX.jpg')} />` 会出现 <img src=[Module Object] />
 
 ### 处理html的本地图片 ###
 
@@ -563,8 +572,178 @@ ignore 忽略一些文件
 	具体看webpack.config.prod.js的配置
 
  2. cache-loader 在一些性能开销较大的 loader 之前添加 cache-loader，将结果缓存中磁盘中。默认保存在 node_modueles/.cache/cache-loader 目录下
+   
+    -------------------- 以上的优化提交在webpack_1.1分支--------------------
+
+ 3. externals + cdn 优化打包文件体积
+
+	1. externals 设置vue和vue-router不参与打包
+
+			// webpack.config.prod.js
+
+			externals: {
+				'vue': 'Vue',
+				'vue-router': 'VueRouter',
+        		'element-ui': 'ElementUI'
+				'lodash': '_'
+			}
+--------------代码提交至webpack_1.2分支，是在webpack_1.1分支下创建的分支--------
+ 4. noParse
  
+	如果一些第三方模块没有AMD/CommonJS规范版本，可以使用 noParse 来标识这个模块，这样 Webpack 会引入这些模块，但是不进行转化和解析，从而提升 Webpack 的构建性能 ，例如：jquery 、lodash
 
--------------------- 以上的优化提交在webpack_1.1分支--------------------
+	// 举例， webpack.config.base.js
+	noParse: /lodash/
 
- 3. 
+ 5. IgnorePlugin --webpack内置插件，作用是忽略第三方包指定目录
+
+	// 语法格式
+	new webpack.IgnorePlugin(requestRegExp, contextRegExp);
+	
+	参数： 
+		requestRegExp 匹配资源请求路径的正则表达式
+		contextRegExp （可选）匹配test资源的上下文的正则表达式
+
+----------------------------这部分不做演示---------------------------------
+
+ 6. DllPlugin
+	
+	简述一下DllPlugin 的步骤
+
+	1. build文件夹新建webpack.config.dll.js文件
+
+            // 具体如下
+             const webpack = require('webpack');
+             const path = require('path');
+
+             // 需要打包进来的文件
+             const vendors = [
+                 'vue',
+                 'vue-router',
+                 'element-ui'
+             ];
+             module.exports = {
+                 entry: {
+                    vendor: vendors
+                 },
+                 mode: 'production',
+                 output: {
+                     filename: '[name].dll.[hash:6].js', // 输出的名字
+                     path: path.resolve(__dirname, '../dist/dll'), // 路径
+                     library: '[name]_dll', // 暴露给外部使用
+                     // librayTarget 指定如何暴露内容，缺省时就是 var
+                 },
+                 plugins: [
+                     new webpack.DllPlugin({
+                         // name必须和library一致
+                         name: '[name]_dll',
+                         path: path.resolve(__dirname, '../dist/dll/mainfest.json') //manifest.json的生成路径
+                     })
+                 ]
+             };
+
+	2. package.json配置脚本
+
+            "scripts": {
+                "dev": "cross-env NODE_ENV=development webpack-dev-server --config=build/webpack.config.dev.js",
+                "build": "cross-env NODE_ENV=production node build/build.js",
+                "build:dll": "webpack --config build/webpack.config.dll.js", // 重点关注这个就行
+            },
+	3. webpack.config.prod.js文件配置DLLReferencePlugin让mainfest.json映射到相关依赖上
+
+			plugins: [
+				new webpack.DllReferencePlugin({
+            		manifest: path.resolve(__dirname, '../dist/dll/mainfest.json')
+        		})
+			]
+
+--------------------这部分代码提交webpack_1.3分支上 -----------------------------
+
+ 7. 抽离公共代码splitChunk --webpack 4.x自带的插件，默认存在 --还不太懂
+
+	参数：
+	 - minSize(默认是30000): 形成一个新代码块最小的体积
+	 - minChunks(默认是1):在分割之前，这个代码块最小应该被应用的次数
+	 - maxInitialRequests（默认是3）：一个入口最大的并行请求数
+	 - maxAsyncRequests（默认是5）：按需加载时候最大的并行请求数。
+	 - chunks (默认是async) ：initial、async和all
+	 - test: 用于控制哪些模块被这个缓存组匹配到。原封不动传递出去的话，它默认会选择所有的模块。可以传递的值类型：RegExp、String和Function
+	 - name（打包的chunks名字）：字符串或者函数(函数可以根据条件自定义名字)
+	 - priority：缓存组打包的先后优先级。
+	
+	我也是在参考这篇文章先写个demo：[https://juejin.im/post/6844903614759043079](https://juejin.im/post/6844903614759043079)
+
+	后面会完善这部分，因为很重要
+	
+ 8. webpack自身的优化
+
+	1. tree-shaking
+
+		使用ES6的import语法，那么生产环境下移除没有使用的代码
+
+	2. scope hosting作用域提升
+
+		变量提升，可以减少一些变量声明。在生产环境下，默认开启。生产环境默认开启
+
+
+-----------------------以下未提及的两种优化------------------------------
+
+ 9. happypack 
+ 
+	大量文件需要处理和解析，主要就是让webpack同一时刻处理多个任务
+
+	1. 安装依赖 
+
+			npm install happypack -D
+	2. 修改配置文件 webpack.config.base.js
+
+            const Happypack = require('happypack');
+            module.exports = {
+                //...
+                module: {
+                    rules: [
+                        {
+                            test: /\.js[x]?$/,
+                            use: 'Happypack/loader?id=js',
+                            include: [path.resolve(__dirname, 'src')]
+                        },
+                        {
+                            test: /\.css$/,
+                            use: 'Happypack/loader?id=css',
+                            include: [
+                                path.resolve(__dirname, 'src'),
+                                path.resolve(__dirname, 'node_modules', 'bootstrap', 'dist')
+                            ]
+                        }
+                    ]
+                },
+                plugins: [
+                    new Happypack({
+                        id: 'js', //和rule中的id=js对应
+                        //将之前 rule 中的 loader 在此配置
+                        use: ['babel-loader'] //必须是数组
+                    }),
+                    new Happypack({
+                        id: 'css',//和rule中的id=css对应
+                        use: ['style-loader', 'css-loader','postcss-loader'],
+                    })
+                ]
+            }
+ 10. HardSourceWebpackPlugin
+
+	HardSourceWebpackPlugin 为模块提供中间缓存，缓存默认的存放路径是: node_modules/.cache/hard-source。
+
+	1. 安装依赖
+
+		npm install hard-source-webpack-plugin -D
+
+	2. 修改webpack.config.base.js配置
+
+        //webpack.config.js
+        const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+        module.exports = {
+            //...
+            plugins: [
+               new HardSourceWebpackPlugin()
+            ]
+        }
