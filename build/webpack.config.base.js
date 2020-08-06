@@ -45,7 +45,7 @@ module.exports = {
                     //         reloadAll: true,
                     //     }
                     // },
-                    // 'style-loader',
+                    'style-loader',
                     'css-loader', {
                         loader: 'postcss-loader',
                         options: {
