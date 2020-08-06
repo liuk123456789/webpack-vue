@@ -10,6 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');// 压缩js
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
+const utils = require('./utils');
 
 module.exports = smp.wrap(merge(baseWebpackConfig, {
     mode: 'production',
@@ -42,18 +43,18 @@ module.exports = smp.wrap(merge(baseWebpackConfig, {
                     }
                 ],
         }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.resolve(__dirname, '../public/index.html'),
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
-                // more options:
-                // https://github.com/kangax/html-minifier#options-quick-reference
-            },
-            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            chunksSortMode: 'auto',// 允许控制在将块包含到HTML中之前应如何对其进行排序
-        }),
-    ]
+        // new HtmlWebpackPlugin({
+        //     filename: 'index.html',
+        //     template: path.resolve(__dirname, '../public/index.html'),
+        //     minify: {
+        //         removeComments: true,
+        //         collapseWhitespace: true,
+        //         removeAttributeQuotes: true
+        //         // more options:
+        //         // https://github.com/kangax/html-minifier#options-quick-reference
+        //     },
+        //     // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+        //     chunksSortMode: 'auto',// 允许控制在将块包含到HTML中之前应如何对其进行排序
+        // }),
+    ].concat(utils.htmlPlugin())
 }));

@@ -2,18 +2,18 @@
 let routes = [
     {
         path: "",
-        component: () => import("./App.vue"),
+        component: () => import("../App.vue"),
         redirect: '/home',
         children:[
             {
                 path: 'home',
                 name: 'home',
-                component: () => import(/* webpackChunkName: "home" */"@/views/home/home.vue"),
+                component: () => import(/* webpackChunkName: "page-home" */"../home/home.vue"),
                 children: [
                     {
                         path: 'detail',
                         name: 'detail',
-                        component: () => import(/* webpackChunkName: "home" */'@/views/home/detail.vue'),
+                        component: () => import(/* webpackChunkName: "page-home" */'../home/detail.vue'),
                     }
                 ]
             }

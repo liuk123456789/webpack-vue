@@ -661,6 +661,40 @@ ignore 忽略一些文件
 
  7. 抽离公共代码splitChunk --webpack 4.x自带的插件，默认存在 --还不太懂
 
+	说明：webpack4之前使用的commonsChunkPlugin的进行块分割
+
+	一般多用于多入口的打包，重复引入第三方库时使用，
+
+	不需要安装splitChunksPlugin 因为自带
+	
+	默认配置是这样的
+
+    module.exports = {
+        optimization: {
+            splitChunks: {
+                chunks: "async",// all async initial
+                minSize: 30000,
+                maxSize: 0,
+                minChunks: 1,
+                maxAsyncRequests: 5,
+                maxInitialRequests: 3,
+                automaticNameDelimiter: "~",
+                name: true,
+                cacheGroups: {
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        priority: -10
+                    },
+                    default: {
+                        minChunks: 2,
+                        priority: -20,
+                        reuseExistingChunk: true
+                    }
+                }
+            }
+        },
+    };
+
 	参数：
 	 - minSize(默认是30000): 形成一个新代码块最小的体积
 	 - minChunks(默认是1):在分割之前，这个代码块最小应该被应用的次数
@@ -670,14 +704,22 @@ ignore 忽略一些文件
 	 - test: 用于控制哪些模块被这个缓存组匹配到。原封不动传递出去的话，它默认会选择所有的模块。可以传递的值类型：RegExp、String和Function
 	 - name（打包的chunks名字）：字符串或者函数(函数可以根据条件自定义名字)
 	 - priority：缓存组打包的先后优先级。
+	 - cacheGroup:缓存组，抽取公共模块都是在这里使用
+	 - minChunks:最小块，即当块的数量大于等于minChunks时，才起作用
 	
 	我也是在参考这篇文章先写个demo：[https://juejin.im/post/6844903614759043079](https://juejin.im/post/6844903614759043079)
 
 	后面会完善这部分，因为很重要
-	
- 8. webpack自身的优化
 
-	1. tree-shaking
+目前先说说webpack构建webpack 构建Vue多页面应用
+
+## 构建Vue多页面应用 ##
+
+
+	
+ 1. webpack自身的优化
+
+	2. tree-shaking
 
 		使用ES6的import语法，那么生产环境下移除没有使用的代码
 

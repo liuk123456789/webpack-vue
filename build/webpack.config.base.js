@@ -4,13 +4,13 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const utils = require('./utils');
+console.log(utils.entries());
 
 module.exports = {
-    entry: {
-        app: './src/main.js',
-    },
+    entry: utils.entries(),
     output: {
-        path: path.resolve(__dirname,'..','dist'),
+        path: path.resolve(__dirname,'../dist'),
         filename: '[name].[hash:6].js',
         chunkFilename: 'router/[name].[hash:6].js',
         publicPath: '/'
@@ -26,7 +26,7 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: ['cache-loader','vue-loader'],
+                use: ['cache-loader','vue-loader'],
                 include: [path.resolve(__dirname, '../src')]
             },
             {

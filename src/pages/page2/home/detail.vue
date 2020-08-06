@@ -22,7 +22,7 @@ export default {
     computed: {},
     methods: {
         handleBack() {
-            this.$router.push({name: 'home'});
+            this.$router.push({name: 'homeOther'});
         }
     },
     created() {
@@ -34,5 +34,5 @@ export default {
 };
 </script>
 <style scoped lang="less">
-    @import '../../style/style.less';
+    @import '../style/style.less';
 </style>
