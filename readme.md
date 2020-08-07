@@ -713,6 +713,8 @@ ignore 忽略一些文件
 
 目前先说说webpack构建webpack 构建Vue多页面应用
 
+--webpack_1.4 主要是如何构建vue多页面，没来来得及整理。具体代码分支查看
+
 ## 构建Vue多页面应用 ##
 
 
