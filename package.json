@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "lint:lint-staged": "lint-staged",
     "commit": "git-cz",
-    "release": "standard-version"
+    "release": "release-it"
   },
   "keywords": [],
   "author": "",
