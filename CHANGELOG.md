@@ -1,6 +1,13 @@
 # 更新历史 
 
 
+### [1.1.3](https://github.com/liuk123456789/webpack-vue/compare/v1.1.2...v1.1.3) (2023-04-27)
+
+
+### 📦 Chores | 其他更新
+
+* **deps:** release-it replace standard-version ([6a7a4ec](https://github.com/liuk123456789/webpack-vue/commit/6a7a4ecd1027aab6efd664c85f7149368e8bb0fd))
+
 ### [1.1.2](https://github.com/liuk123456789/webpack-vue/compare/v1.1.1...v1.1.2) (2023-04-26)
 
 
