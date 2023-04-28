@@ -1,15 +1,17 @@
-{
-  "root": true,
-  "env": {
-    "browser": true,
-    "node": true,
-    "es2021": true,
+module.exports = {
+  root: true,
+  parser: 'vue-eslint-parser',
+  env: {
+    node: true,
+    es2021: true,
+    browser: true
   },
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
-    'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:prettier/recommended'
   ],
   parserOptions: {
     ecmaVersion: 12,
@@ -17,18 +19,12 @@
     sourceType: 'module',
     jsxPragma: 'React',
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto",
-      },
-    ],
-    "vue/html-self-closing": "error",
-  },
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/html-self-closing': 'error'
+  }
 }

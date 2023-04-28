@@ -10,6 +10,7 @@ specifiers:
   cz-conventional-changelog: ^3.3.0
   cz-customizable: ^7.0.0
   eslint: ^8.39.0
+  eslint-config-prettier: ^8.8.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-vue: ^9.11.0
   husky: ^8.0.3
@@ -19,6 +20,7 @@ specifiers:
   standard-version: ^9.5.0
   typescript: ^5.0.4
   vue: ^3.2.47
+  vue-eslint-parser: ^9.1.1
   webpack: ^5.80.0
   webpack-cli: ^5.0.2
 
@@ -35,7 +37,8 @@ devDependencies:
   cz-conventional-changelog: 3.3.0
   cz-customizable: 7.0.0
   eslint: 8.39.0
-  eslint-plugin-prettier: 4.2.1_gzzoxnolhqaq7c223fbw7gyghm
+  eslint-config-prettier: 8.8.0_eslint@8.39.0
+  eslint-plugin-prettier: 4.2.1_5pokp25ua6t5ubushhw3tqituq
   eslint-plugin-vue: 9.11.0_eslint@8.39.0
   husky: 8.0.3
   lint-staged: 13.2.1
@@ -43,6 +46,7 @@ devDependencies:
   release-it: 15.10.1
   standard-version: 9.5.0
   typescript: 5.0.4
+  vue-eslint-parser: 9.1.1_eslint@8.39.0
   webpack: 5.80.0_webpack-cli@5.0.2
   webpack-cli: 5.0.2_webpack@5.80.0
 
@@ -2215,7 +2219,16 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-plugin-prettier/4.2.1_gzzoxnolhqaq7c223fbw7gyghm:
+  /eslint-config-prettier/8.8.0_eslint@8.39.0:
+    resolution: {integrity: sha512-wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.39.0
+    dev: true
+
+  /eslint-plugin-prettier/4.2.1_5pokp25ua6t5ubushhw3tqituq:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -2227,6 +2240,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.39.0
+      eslint-config-prettier: 8.8.0_eslint@8.39.0
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
     dev: true
