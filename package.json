@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack serve --config  build/webpack.dev.ts",
+    "build": "webpack --config build/webpack.prod.ts",
     "prepare": "husky install",
+    "lint": "eslint --cache --fix",
     "lint:lint-staged": "lint-staged",
     "commit": "git-cz",
     "release": "release-it",
