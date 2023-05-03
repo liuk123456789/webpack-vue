@@ -8,6 +8,8 @@ import { VueLoaderPlugin } from 'vue-loader'
 
 import Dotenv from 'dotenv-webpack'
 
+import { generateCssLoader } from './utils'
+
 const webpackBaseConfig: Configuration = {
   entry: path.join(__dirname, '../src/main.ts'),
   output: {
@@ -33,11 +35,15 @@ const webpackBaseConfig: Configuration = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      }
+      },
+      ...generateCssLoader()
     ]
   },
   resolve: {
-    extensions: ['.vue', '.ts', '.tsx', '.js']
+    extensions: ['.vue', '.ts', '.tsx', '.js', '.less', '.scss', '.sass', '.styl'],
+    alias: {
+      '@': path.join(__dirname, '../src')
+    }
   },
   plugins: [
     new VueLoaderPlugin(),
