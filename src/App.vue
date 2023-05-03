@@ -1,14 +1,7 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-export default defineComponent({
-  setup() {
-    const count = ref(0)
-    return {
-      count
-    }
-  }
-})
+<script lang="ts" setup>
+const { BASE_ENV } = GLOBAL_INFO
 </script>
 <template>
   <div>Webpack Build Vue3.x</div>
+  <span>{{ BASE_ENV }}</span>
 </template>

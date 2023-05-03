@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --config  build/webpack.dev.ts",
-    "build": "webpack --config build/webpack.prod.ts",
+    "dev": "cross-env BASE_ENV=dev webpack serve --config  build/webpack.dev.ts",
+    "build": "croess-env BASE_ENV=pro webpack --config build/webpack.prod.ts",
+    "preview": "serve -s dist -C",
     "prepare": "husky install",
     "lint": "eslint --cache --fix",
     "lint:lint-staged": "lint-staged",
@@ -30,8 +31,10 @@
     "commitizen": "^4.3.0",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.30.1",
+    "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.0.0",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -41,6 +44,7 @@
     "lint-staged": "^13.2.1",
     "prettier": "^2.8.8",
     "release-it": "^15.10.1",
+    "serve": "^14.2.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
@@ -51,6 +55,7 @@
     "webpack-dev-server": "^4.13.3"
   },
   "dependencies": {
+    "@types/dotenv-webpack": "^7.0.3",
     "@types/node": "^18.16.2",
     "vue": "^3.2.47"
   },
