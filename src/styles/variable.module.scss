@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Fira Code";
+  src: local("Fira Code"),
+    url("@/assets/fonts/FiraCode-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+$color: #e5e5e5;
+$globalBgColor: #F8F8F8;
+$globalHeaderBg: #fff;
+
+$themeColor: #3E68FF;
+$defaultColor: #333;
+$secondaryColor: #666;
+$thirdColor: #999;
+$titleColor: #13284B;
+$tipColor: #FF6160;
+
+$basicWidth: 1200px;
+$globalHeaderHeight: 60px;
+$globalFooterHeight: 40px;
