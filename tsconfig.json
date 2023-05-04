@@ -21,7 +21,8 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",

@@ -22,6 +22,7 @@
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
+    "@babel/runtime": "^7.21.5",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
     "@release-it/conventional-changelog": "^5.1.1",
@@ -68,6 +69,7 @@
   "dependencies": {
     "@types/dotenv-webpack": "^7.0.3",
     "@types/node": "^18.16.2",
+    "axios": "^1.4.0",
     "vue": "^3.2.47"
   },
   "lint-staged": {
