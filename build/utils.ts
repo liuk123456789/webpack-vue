@@ -12,7 +12,7 @@ const loaderRegexs = {
   [STYLE_ENUM.STYLUS]: /\.styl$/
 }
 
-const styleLoadersArray = ['style-loader', 'css-loader']
+const styleLoadersArray = ['style-loader', 'css-loader', 'postcss-loader']
 
 const loaderOptions = [
   {
