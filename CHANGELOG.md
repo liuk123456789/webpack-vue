@@ -1,6 +1,25 @@
 # 更新历史 
 
 
+## [1.3.0](https://github.com/liuk123456789/webpack-vue/compare/v1.2.0...v1.3.0) (2023-05-04)
+
+
+### 📝 Documentation | 文档
+
+* **custom:** rEADME Update ([4459e31](https://github.com/liuk123456789/webpack-vue/commit/4459e3130ea1f5f9a27fa270f677f13b2424d5e5))
+
+
+### 👷‍ Build System | 构建
+
+* **deps:** 相关依赖修改 ([ff8fe76](https://github.com/liuk123456789/webpack-vue/commit/ff8fe76979f2e6065fc934be820bbd4bd475a726))
+
+
+### ✨ Features | 新功能
+
+* **deps:** cross-env\&dotenv-webpack config enviroment ([bf7c94a](https://github.com/liuk123456789/webpack-vue/commit/bf7c94ac55d7b7957518d85915954db9779dc138))
+* **deps:** style rule loaders config ([3c29067](https://github.com/liuk123456789/webpack-vue/commit/3c29067dac099007900fc8025b75a714937a1fba))
+* **styles:** config style loader generate ([859efda](https://github.com/liuk123456789/webpack-vue/commit/859efdacc1b22e052cc451d2e1c5ef9bf7d85c86))
+
 ## [1.2.0](https://github.com/liuk123456789/webpack-vue/compare/v1.1.3...v1.2.0) (2023-04-28)
 
 
