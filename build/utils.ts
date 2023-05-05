@@ -1,3 +1,5 @@
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+
 enum STYLE_ENUM {
   CSS = 'css',
   SASS = 'sass',
@@ -12,7 +14,13 @@ const loaderRegexs = {
   [STYLE_ENUM.STYLUS]: /\.styl$/
 }
 
-const styleLoadersArray = ['style-loader', 'css-loader', 'postcss-loader']
+const isDev = process.env.NODE_ENV === 'development'
+
+const styleLoadersArray = [
+  isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+  'css-loader',
+  'postcss-loader'
+]
 
 const loaderOptions = [
   {
