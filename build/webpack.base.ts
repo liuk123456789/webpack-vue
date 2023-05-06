@@ -15,10 +15,11 @@ const webpackBaseConfig: Configuration = {
   entry: path.join(__dirname, '../src/main.ts'),
   stats: process.env.NODE_ENV === 'development' ? 'errors-only' : 'normal',
   output: {
-    filename: '[name]_[chunkhash:8].js',
+    filename: '[name]_[contenthash:6].js',
     path: path.join(__dirname, '../dist'),
     clean: true,
-    publicPath: '/'
+    publicPath: '/',
+    chunkFilename: '[name].[contenthash:8].js'
   },
   module: {
     rules: [
