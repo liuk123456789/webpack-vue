@@ -5,6 +5,8 @@ import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackBar from 'webpackbar'
 
+// import CustomLoggerPlugin from './plugins/CustomLoggerPlugin'
+
 import { VueLoaderPlugin } from 'vue-loader'
 
 import Dotenv from 'dotenv-webpack'
@@ -124,6 +126,17 @@ const webpackBaseConfig: Configuration = {
       basic: false,
       profile: false
     })
+    // Test custom plugin
+    // new CustomLoggerPlugin(
+    //   () => {
+    //     // Webpack 模块完成转换成功
+    //     console.log('emit 事件发生啦，所有模块的转换和代码块对应的文件已经生成好~')
+    //   },
+    //   () => {
+    //     // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
+    //     console.log('done 事件发生啦，成功构建完成~')
+    //   }
+    // )
   ],
   cache: {
     type: 'filesystem'
