@@ -6,6 +6,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackBar from 'webpackbar'
 
 // import CustomLoggerPlugin from './plugins/CustomLoggerPlugin'
+import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin'
 
 import { VueLoaderPlugin } from 'vue-loader'
 
@@ -125,6 +126,14 @@ const webpackBaseConfig: Configuration = {
       color: '#3E68FF',
       basic: false,
       profile: false
+    }),
+    new ModuleFederationPlugin({
+      name: 'component_app',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './RemoteComponent': './src/components/RemoteComponent.vue'
+      },
+      shared: ['vue']
     })
     // Test custom plugin
     // new CustomLoggerPlugin(
