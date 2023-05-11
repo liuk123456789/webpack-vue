@@ -14,4 +14,4 @@ dist
 # IDE
 .idea
 .vscode
-.env.*
+.env.local
