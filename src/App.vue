@@ -6,6 +6,8 @@ import bigImg from '@/assets/images/4.jpg'
 
 import axios from 'axios'
 
+import Federation from './components/Federation'
+
 interface ICity {
   code: string
   value: string
@@ -30,6 +32,7 @@ onMounted(async () => {
     <img class="img" :src="smallImg" />
     <img class="img" :src="bigImg" />
   </div>
+  <Federation />
   <ul>
     <li v-for="city in cityList" :key="city.code">{{ city.value }}</li>
   </ul>

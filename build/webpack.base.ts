@@ -7,6 +7,8 @@ import WebpackBar from 'webpackbar'
 
 // import CustomLoggerPlugin from './plugins/CustomLoggerPlugin'
 
+import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin'
+
 import { VueLoaderPlugin } from 'vue-loader'
 
 import Dotenv from 'dotenv-webpack'
@@ -125,6 +127,13 @@ const webpackBaseConfig: Configuration = {
       color: '#3E68FF',
       basic: false,
       profile: false
+    }),
+    new ModuleFederationPlugin({
+      name: 'component_app',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './App': './src/App.vue'
+      }
     })
     // Test custom plugin
     // new CustomLoggerPlugin(
@@ -140,6 +149,11 @@ const webpackBaseConfig: Configuration = {
   ],
   cache: {
     type: 'filesystem'
+  },
+  optimization: {
+    runtimeChunk: {
+      name: 'runtimeChunk'
+    }
   }
 }
 

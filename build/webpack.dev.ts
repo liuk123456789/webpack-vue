@@ -2,23 +2,27 @@ import path from 'path'
 
 import { merge } from 'webpack-merge'
 
-import { Configuration as WebpackConfiguration } from 'webpack'
+import webpack, { Configuration } from 'webpack'
 
-import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server'
+import WebpackDevServer from 'webpack-dev-server'
 
-interface WebpackDevConfiguraion extends WebpackConfiguration {
-  devServer: WebpackDevServerConfiguration
-}
+// import { openBrowser } from './browser'
 
 import webpackBaseConfig from './webpack.base'
 
-const webpackDevConfig: WebpackDevConfiguraion = merge(webpackBaseConfig, {
+const host = '127.0.0.1'
+const port = 9527
+
+const webpackDevConfig: Configuration = merge(webpackBaseConfig, {
   mode: 'development',
-  devtool: 'eval-cheap-module-source-map',
-  devServer: {
-    host: '0.0.0.0',
-    port: 9527,
-    open: true,
+  devtool: 'eval-cheap-module-source-map'
+})
+
+const devServer = new WebpackDevServer(
+  {
+    host,
+    port,
+    open: false,
     compress: false,
     hot: true,
     historyApiFallback: true, // history 404
@@ -27,7 +31,13 @@ const webpackDevConfig: WebpackDevConfiguraion = merge(webpackBaseConfig, {
       directory: path.join(__dirname, '../public')
     },
     headers: { 'Access-Control-Allow-Origin': '*' }
-  }
-}) as WebpackDevConfiguraion
+  },
+  webpack(webpackDevConfig)
+)
+
+devServer.start().then(() => {
+  // 启动界面
+  // openBrowser(`http://${host}:${port}`, true)
+})
 
 export default webpackDevConfig
